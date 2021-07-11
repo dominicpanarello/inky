@@ -1,0 +1,63 @@
+<html>
+<head>
+<style type="text/css">
+.black_fg {color:#1c181c}
+.black_bg {background-color:#1c181c}
+.white_fg {color:#ffffff}
+.white_bg {background-color:#ffffff}
+.green_fg {color:#1dad23}
+.green_bg {background-color:#1dad23}
+.blue_fg {color:#1e1dae}
+.blue_bg {background-color:#1e1dae}
+.red_fg {color:#cd2425}
+.red_bg {background-color:#cd2425}
+.yellow_fg {color:#e7de23}
+.yellow_bg {background-color:#e7de23}
+.orange_fg {color:#a67b24}
+.orange_bg {background-color:#a67b24}
+body {
+    margin: 0;
+	width:600px;
+	height:448px;
+    background-image: url({image});
+    background-repeat: no-repeat;
+}
+article {
+    height:224px;
+	display: flex;
+	justify-content: center;
+}
+article.top {
+    justify-content: flex-end;
+}
+article.bottom {
+    align-items: flex-end;
+}
+h3 {
+	font-size:23px;
+	text-align:center;
+	text-shadow: 1px 1px #1c171c;
+}
+ol {
+    position:absolute;
+    list-style-type:lower-alpha;
+    font-size:23px;
+    color: #ffffff;
+	text-align:center;
+	text-shadow: 1px 1px #1c171c;
+	margin-right: 10px;
+}
+
+</style>
+</head>
+<body>
+	<article class="top">
+	    <ol>
+            {topRight}
+        </ol>
+	</article>
+	<article class="bottom">
+        <h3 class="white_fg">{line1}<br/>{line2}</h3>
+	</article>
+</body>
+</html>
