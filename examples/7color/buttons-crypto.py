@@ -7,22 +7,35 @@ import requests
 from requests.exceptions import HTTPError
 import json
 import random
+from decimal import *
+import time
 
 class Crypto:
     
     def __init__(self):
         self.btcUrl = "https://api.coinbase.com/v2/prices/spot?currency=EUR"
+        self.ltcUrl = "https://api.coinbase.com/v2/prices/LTC-EUR/spot?currency=EUR"
+        self.ethUrl = "https://api.coinbase.com/v2/prices/ETH-EUR/spot?currency=EUR"
+        
+    def getPrice(self, url):
+            response = requests.get(url)
+            response.raise_for_status()
+            jsonResponse = response.json()
+            return Decimal(jsonResponse.get("data").get("amount"))
 
     
     def next(self, buttonLabel=None):
 
-        price = ""
+        btc = ""
+        ltc = ""
+        eth = ""
         try:
-            response = requests.get(self.btcUrl)
-            response.raise_for_status()
-            # access JSOn content
-            jsonResponse = response.json()
-            price = jsonResponse.get("data").get("amount")
+            btc = self.getPrice(self.btcUrl)
+            ltc = self.getPrice(self.ltcUrl)
+            eth = self.getPrice(self.ethUrl)
+            ltcBtc = ltc/btc
+            ethBtc = eth/btc
+            
             
         except HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')
@@ -30,7 +43,7 @@ class Crypto:
             print(f'Other error occurred: {err}')
     
         imageNum = random.randint(1, 19)
-        return {"image": "/home/pi/Pictures/image{}.jpg".format(imageNum), "line2": "BTC: {}e".format(price)}
+        return {"image": "/home/pi/Pictures/image{}.jpg".format(imageNum), "line2": "BTC:{}e|LTC:{}|eth:{}".format(btc, ltcBtc, ethBtc)}
 
         
 print("""buttons-crypto.py - A simple button tool for display a random image and the current crypto price.
@@ -73,4 +86,8 @@ for pin in BUTTONS:
 
 # Finally, since button handlers don't require a "while True" loop,
 # we pause the script to prevent it exiting immediately.
-signal.pause()
+#signal.pause()
+signals = range(1, signal.NSIG)
+while(True):
+    handle_button(5)
+    time.sleep(21600) # 6 hours
