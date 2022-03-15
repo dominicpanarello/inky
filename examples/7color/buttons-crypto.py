@@ -30,11 +30,11 @@ class Crypto:
         ltc = ""
         eth = ""
         try:
-            btc = self.getPrice(self.btcUrl)
+            btc = round(self.getPrice(self.btcUrl), 0)
             ltc = self.getPrice(self.ltcUrl)
             eth = self.getPrice(self.ethUrl)
-            ltcBtc = ltc/btc
-            ethBtc = eth/btc
+            ltcBtc = round(ltc/btc, 5)
+            ethBtc = round(eth/btc, 4)
             
             
         except HTTPError as http_err:
